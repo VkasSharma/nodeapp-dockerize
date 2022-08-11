@@ -11,7 +11,7 @@ phases:
     commands:
       - echo Build started on `date`
       - echo Building the Docker image...
-      - aws s3 sync s3://demo-env-file/env.txt
+      - aws s3 cp s3://demo-env-file/env.txt .env
       - ls -l
         #- docker build -t elastic-beanstalk .
         #- docker tag elastic-beanstalk:latest 698045063618.dkr.ecr.us-east-1.amazonaws.com/elastic-beanstalk:latest      
