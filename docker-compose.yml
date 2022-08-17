@@ -1,0 +1,36 @@
+version: '3'
+
+services:
+  plugg-dev-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: plugg-dev-app
+    restart: always
+    volumes:
+      - ./:/var/www/html
+      - ./storage:/var/www/html/storage
+    networks:
+      - plugg-dev-network
+    ports:
+      - "9090:8080"
+
+  plugg-dev-webserver:
+    build:
+      context: ./nginx-dev
+      dockerfile: Dockerfile
+    container_name: plugg-dev-webserver
+    restart: always
+    volumes:
+      - ./public:/var/www/html/public
+      - ./devlogdna:/var/log/nginx
+    ports:
+      - "8081:80"
+    depends_on:
+      - plugg-dev-app
+    networks:
+      - plugg-dev-network
+
+networks:
+  plugg-dev-network:
+    driver: bridge
